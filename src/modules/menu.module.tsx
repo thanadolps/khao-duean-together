@@ -1,6 +1,10 @@
+import React from "react";
+import firebase from "firebase";
+
 import {
   Avatar,
   Box,
+  Button,
   Card,
   Container,
   FormHelperText,
@@ -8,10 +12,11 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
-import React from "react";
+
 import { SheetCardComponent } from "../components/sheet-card.component";
 import { YELLOW } from "../constant/color.constant";
 import { Major, Year, Subject } from "../models/tag.model";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const links = [
   "Upload File",
@@ -21,7 +26,6 @@ const links = [
   "About",
   "",
   "Edit your personal data",
-  "Sign out",
 ];
 
 const useStyle = makeStyles((theme) => ({
@@ -38,11 +42,17 @@ const useStyle = makeStyles((theme) => ({
     width: "50%",
     height: "50%",
   },
+  link: {
+    width: "max-content",
+    cursor: "pointer",
+  },
 }));
 
 export const MenuModule = () => {
   const classes = useStyle();
   const theme = useTheme();
+
+  const [user, loading, error] = useAuthState(firebase.auth());
 
   return (
     <div className={classes.root}>
@@ -56,15 +66,26 @@ export const MenuModule = () => {
           <Avatar className={classes.avatar} src="https://picsum.photos/100">
             A
           </Avatar>
-          <Typography variant="h1">NAME</Typography>
+          <Typography variant="h1">{JSON.stringify(user)}</Typography>
         </Box>
 
-        <Box display="grid" gridTemplateRows={`repeat(${links.length}, 1fr)`}>
+        <Box
+          display="grid"
+          gridTemplateRows={`repeat(${links.length}, 1fr)`}
+          justifyContent="start"
+        >
           {links.map((i) => (
-            <Typography variant="h6" id={i}>
-              {i}
-            </Typography>
+            <a href="aaa" className={classes.link}>
+              <Typography variant="h6" id={i}>
+                {i}
+              </Typography>
+            </a>
           ))}
+          <a className={classes.link}>
+            <Typography variant="h6">
+              {user ? "Sign out" : "Sign In"}
+            </Typography>
+          </a>
         </Box>
       </Container>
     </div>

@@ -2,8 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { AppModule } from "./modules/app.module";
 import * as serviceWorker from "./serviceWorker";
+import firebase from "firebase";
 
 import "./styles/index.css";
+import { firebaseConfig } from "./constant/firebase-config.constant";
+
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <React.StrictMode>
