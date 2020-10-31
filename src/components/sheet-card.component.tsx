@@ -1,41 +1,78 @@
 import {
+  Box,
   Button,
-  Card,
-  CardContent,
-  CardMedia,
+  Chip,
   makeStyles,
+  Paper,
+  PaperProps,
   Typography,
-  useTheme,
 } from "@material-ui/core";
 import React from "react";
 import { SheetModel } from "../models/sheet.model";
+import { RoundPaperComponent } from "./ui/round-paper.component";
+
+export interface SheetCardProps extends PaperProps {
+  sheet: SheetModel;
+}
 
 const useStyle = makeStyles((theme) => ({
   root: {
     maxWidth: theme.breakpoints.width("sm"),
-    display: "flex",
+    padding: theme.spacing(2),
   },
+  title: {
+    lineHeight: "45px",
+  },
+  imageContainer: { maxHeight: "100%" },
   image: {
-    width: "200px",
-    height: "200px",
+    maxHeight: "100%",
+  },
+  chip: {
+    marginRight: theme.spacing(1),
+  },
+  downloadBtn: {
+    backgroundColor: "#D7A3B9",
+  },
+  buttonContainer: {
+    display: "flex",
+    alignItems: "end",
+    gap: `${theme.spacing(2)}px`,
   },
 }));
 
-export const SheetCardComponent: React.FC<{ sheet: SheetModel }> = (props) => {
+export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
   const classes = useStyle();
+  const { sheet, className, ...rest } = props;
 
   return (
-    <Card className={classes.root}>
-      <CardMedia image={props.sheet.imageSrc} className={classes.image} />
-      <CardContent>
-        <Typography variant="h4">{props.sheet.title}</Typography>
-        <Typography color="textSecondary">
-          <i>{props.sheet.view} view</i>
-        </Typography>
-        <Button color="primary" variant="contained">
-          <Typography variant="h4">OPEN</Typography>
+    <RoundPaperComponent className={classes.root + " " + className} {...rest}>
+      <Typography variant="h3" className={classes.title}>
+        <b>{sheet.title}</b>
+      </Typography>
+
+      <div>
+        {[sheet.tags.major, sheet.tags.subject, sheet.tags.year].map((tag) => (
+          <Chip label={tag} color="primary" className={classes.chip} />
+        ))}
+      </div>
+
+      <Typography color="textSecondary">
+        <i>{sheet.view} view</i>
+      </Typography>
+
+      <Box className={classes.buttonContainer}>
+        <Button color="secondary" variant="contained">
+          <Typography variant="h3">OPEN</Typography>
         </Button>
-      </CardContent>
-    </Card>
+
+        <Button
+          color="secondary"
+          variant="contained"
+          className={classes.downloadBtn}
+        >
+          <Typography variant="body2">Download</Typography>
+        </Button>
+      </Box>
+    </RoundPaperComponent>
   );
 };

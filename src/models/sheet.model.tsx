@@ -1,7 +1,8 @@
+import { Tags } from "./tag.model";
+
 export interface SheetModel {
   title: string;
-  imageSrc: string;
+  tags: Tags;
   view: number;
-  tags: string[]; // may change
   dataSrc: string;
 }

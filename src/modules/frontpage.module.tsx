@@ -1,33 +1,57 @@
-import { Card, Container, makeStyles, Typography } from "@material-ui/core";
+import {
+  Card,
+  Container,
+  FormHelperText,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
 import { SheetCardComponent } from "../components/sheet-card.component";
+import { Major, Year, Subject } from "../models/tag.model";
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#A9A9A9",
+    backgroundColor: "#8E728D",
     minHeight: "100vh",
   },
-});
+  cardContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: `${theme.spacing(1)}px`,
+  },
+}));
 
 export const FrontPageModule = () => {
   const classes = useStyle();
 
   return (
     <div className={classes.root}>
-      <Container>
-        <Typography variant="h1" align="center">
-          เข้าเดือน Together
-        </Typography>
+      <Container className={classes.cardContainer}>
+        <SheetCardComponent
+          sheet={{
+            title: "แคลพี่ตูน",
+            view: 5000,
+            tags: {
+              year: Year.Y1,
+              major: Major.General,
+              subject: Subject.CalI,
+            },
+            dataSrc: "",
+          }}
+        />
 
         <SheetCardComponent
           sheet={{
             title: "แคลพี่ตูน",
             view: 5000,
-            tags: ["ปี 1", "ภาครวม", "แคลคูลัส", "ก่อนมิดเทอม"],
-            imageSrc: "https://picsum.photos/200",
+            tags: {
+              year: Year.Y1,
+              major: Major.General,
+              subject: Subject.CalI,
+            },
             dataSrc: "",
           }}
-        ></SheetCardComponent>
+        />
       </Container>
     </div>
   );
