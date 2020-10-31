@@ -9,10 +9,12 @@ import { NotFoundModule } from "./not-found.module";
 import { AppbarComponent } from "../components/appbar.component";
 import { UploadModule } from "./upload.module";
 import { FrontPageModule } from "./frontpage.module";
+import { MenuModule } from "./menu.module";
+
 import { SlidingOverlayComponent } from "../components/sliding-overlay.component";
 
 export const AppModule = () => {
-  const [overlayActive, setOverlayActive] = useState(false);
+  const [overlayActive, setOverlayActive] = useState(true);
 
   return (
     <ThemeProvider theme={theme}>
@@ -24,7 +26,7 @@ export const AppModule = () => {
           />
           <SlidingOverlayComponent
             in={overlayActive}
-            overlay={<div>AWDAWDAWDW</div>}
+            overlay={<MenuModule />}
             direction="right"
           >
             <Switch>

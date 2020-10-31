@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
-import { DARK_PURPLE, YELLOW } from "../constant/color.constant";
+import { DARK_PURPLE, EMBER, PURPLE, YELLOW } from "../constant/color.constant";
 import { MenuButtonComponent } from "./ui/menu-button.component";
 
 export interface AppbarProps {
@@ -24,7 +24,11 @@ const useStyle = makeStyles<Theme, AppbarProps>((theme) => ({
     padding: theme.spacing(0, 1, 0, 0),
   },
   appBar: {
-    backgroundColor: (props) => (props.inverseColor ? YELLOW : DARK_PURPLE),
+    backgroundColor: (props) => (props.inverseColor ? EMBER : DARK_PURPLE),
+  },
+  title: {
+    color: (props) =>
+      props.inverseColor ? PURPLE : theme.palette.primary.contrastText,
   },
 }));
 
@@ -36,7 +40,9 @@ export const AppbarComponent: React.FC<AppbarProps> = (props) => {
     <AppBar position="static" className={classes.appBar}>
       <div className={classes.container}>
         <MenuButtonComponent onClick={onclick} inverseColor={inverseColor} />
-        <Typography align="center">เข้าเดือน Together</Typography>
+        <Typography align="center" className={classes.title}>
+          เข้าเดือน Together
+        </Typography>
         <Avatar />
       </div>
     </AppBar>

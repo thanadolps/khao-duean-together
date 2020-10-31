@@ -13,6 +13,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
 import { BadgeComponent } from "../components/ui/badge.component";
 import { RoundPaperComponent } from "../components/ui/round-paper.component";
 import { SelectInputComponent } from "../components/ui/select-input.component";
@@ -46,9 +47,11 @@ export const FrontPageModule = () => {
           <RoundPaperComponent>
             <div className={classes.paper}>
               <TextInputComponent label="File Name" className="yellow" />
-              <Button variant="contained" color="secondary">
-                Search
-              </Button>
+              <Link to="display">
+                <Button variant="contained" color="secondary">
+                  Search
+                </Button>
+              </Link>
             </div>
           </RoundPaperComponent>
         </Box>
@@ -66,9 +69,11 @@ export const FrontPageModule = () => {
               </SelectInputComponent>
               <SelectInputComponent label="Select major" className="yellow" />
               <SelectInputComponent label="Select subject" className="yellow" />
-              <Button variant="contained" color="secondary">
-                Search
-              </Button>
+              <Link to="display">
+                <Button variant="contained" color="secondary">
+                  Search
+                </Button>
+              </Link>
             </div>
           </RoundPaperComponent>
         </Box>
