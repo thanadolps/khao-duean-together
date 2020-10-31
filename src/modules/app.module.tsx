@@ -4,9 +4,11 @@ import { theme } from "../styles/theme";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { FrontPageModule } from "./frontpage.module";
+import { DisplayModule } from "./display.module";
 import { NotFoundModule } from "./not-found.module";
 import { AppbarComponent } from "../components/appbar.component";
+import { UploadModule } from "./upload.module";
+import { FrontPageModule } from "./frontpage.module";
 
 export const AppModule = () => {
   return (
@@ -14,6 +16,12 @@ export const AppModule = () => {
       <AppbarComponent />
       <Router>
         <Switch>
+          <Route path="/upload">
+            <UploadModule />
+          </Route>
+          <Route path="/display">
+            <DisplayModule />
+          </Route>
           <Route exact path="/">
             <FrontPageModule />
           </Route>

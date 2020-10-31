@@ -7,6 +7,9 @@ export const theme = createMuiTheme({
   },
   typography: {
     fontFamily: ["Kanit", "Roboto", "sans-serif"].join(","),
+    h2: {
+      fontSize: "1.5rem",
+    },
     h3: {
       fontSize: "1.875rem",
     },
