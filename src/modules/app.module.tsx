@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../styles/theme";
 
@@ -9,27 +9,41 @@ import { NotFoundModule } from "./not-found.module";
 import { AppbarComponent } from "../components/appbar.component";
 import { UploadModule } from "./upload.module";
 import { FrontPageModule } from "./frontpage.module";
+import { SlidingOverlayComponent } from "../components/sliding-overlay.component";
 
 export const AppModule = () => {
+  const [overlayActive, setOverlayActive] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
-      <AppbarComponent />
-      <Router>
-        <Switch>
-          <Route path="/upload">
-            <UploadModule />
-          </Route>
-          <Route path="/display">
-            <DisplayModule />
-          </Route>
-          <Route exact path="/">
-            <FrontPageModule />
-          </Route>
-          <Route>
-            <NotFoundModule />
-          </Route>
-        </Switch>
-      </Router>
+      <React.Suspense fallback={<span>Loading...</span>}>
+        <Router>
+          <AppbarComponent
+            onclick={() => setOverlayActive(!overlayActive)}
+            inverseColor={overlayActive}
+          />
+          <SlidingOverlayComponent
+            in={overlayActive}
+            overlay={<div>AWDAWDAWDW</div>}
+            direction="right"
+          >
+            <Switch>
+              <Route path="/upload">
+                <UploadModule />
+              </Route>
+              <Route path="/display">
+                <DisplayModule />
+              </Route>
+              <Route exact path="/">
+                <FrontPageModule />
+              </Route>
+              <Route>
+                <NotFoundModule />
+              </Route>
+            </Switch>
+          </SlidingOverlayComponent>
+        </Router>
+      </React.Suspense>
     </ThemeProvider>
   );
 };
