@@ -29,6 +29,11 @@ const useStyle = makeStyles((theme) => ({
   },
   chip: {
     marginRight: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+    width: "fit-content",
+    color: theme.palette.primary.contrastText,
+    display: "inline-block",
+    padding: theme.spacing(0, 1, 0, 1),
   },
   downloadBtn: {
     backgroundColor: "#D7A3B9",
@@ -52,7 +57,9 @@ export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
 
       <div>
         {[sheet.tags.major, sheet.tags.subject, sheet.tags.year].map((tag) => (
-          <Chip label={tag} color="primary" className={classes.chip} />
+          <Paper color="primary" className={classes.chip}>
+            {tag}
+          </Paper>
         ))}
       </div>
 
