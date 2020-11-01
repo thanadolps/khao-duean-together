@@ -13,10 +13,6 @@ import { MenuModule } from "./menu.module";
 
 import { SlidingOverlayComponent } from "../components/sliding-overlay.component";
 
-import firebase from "firebase/app";
-import "firebase/auth";
-import { firebaseConfig } from "../constant/firebase-config.constant";
-
 export const AppModule = () => {
   const [overlayActive, setOverlayActive] = useState(false);
 

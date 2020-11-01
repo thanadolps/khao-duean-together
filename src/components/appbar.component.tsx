@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
 import { DARK_PURPLE, EMBER, PURPLE, YELLOW } from "../constant/color.constant";
 import { MenuButtonComponent } from "./ui/menu-button.component";
 
@@ -40,9 +41,11 @@ export const AppbarComponent: React.FC<AppbarProps> = (props) => {
     <AppBar position="static" className={classes.appBar}>
       <div className={classes.container}>
         <MenuButtonComponent onClick={onclick} inverseColor={inverseColor} />
-        <Typography align="center" className={classes.title}>
-          เข้าเดือน Together
-        </Typography>
+        <Link to="/">
+          <Typography align="center" className={classes.title}>
+            เข้าเดือน Together
+          </Typography>
+        </Link>
         <Avatar />
       </div>
     </AppBar>

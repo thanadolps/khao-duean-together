@@ -5,27 +5,25 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
   Container,
-  FormHelperText,
   makeStyles,
   Typography,
   useTheme,
 } from "@material-ui/core";
 
-import { SheetCardComponent } from "../components/sheet-card.component";
 import { YELLOW } from "../constant/color.constant";
-import { Major, Year, Subject } from "../models/tag.model";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut, signIn } from "../components/service/firebase.service";
+import { User } from "../models/user.model";
 
 const links = [
-  "Upload File",
-  "Manage your file",
-  "",
-  "Rules and policies",
-  "About",
-  "",
-  "Edit your personal data",
+  { label: "Upload File", requireLogin: true },
+  { label: "Manage your file", requireLogin: true },
+  { label: "", requireLogin: true },
+  { label: "Rules and policies", requireLogin: false },
+  { label: "About", requireLogin: false },
+  { label: "", requireLogin: true },
+  { label: "Edit your personal data", requireLogin: true },
 ];
 
 const useStyle = makeStyles((theme) => ({
@@ -52,41 +50,64 @@ export const MenuModule = () => {
   const classes = useStyle();
   const theme = useTheme();
 
-  const [user, loading, error] = useAuthState(firebase.auth());
+  const [user, loading, error] = useAuthState(firebase.auth()) as [
+    User | null,
+    boolean,
+    any
+  ];
+
+  const content = () => (
+    <>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        margin={theme.spacing(4, 0, 4, 0)}
+      >
+        {user ? (
+          <>
+            <Avatar className={classes.avatar} src={user?.photoURL}>
+              A
+            </Avatar>
+            <Typography variant="h1" align="center">
+              {user?.displayName}
+            </Typography>
+          </>
+        ) : (
+          <Button variant="contained" color="secondary" onClick={signIn}>
+            Sign In
+          </Button>
+        )}
+      </Box>
+
+      <Box
+        display="grid"
+        gridTemplateRows={`repeat(${links.length}, 1fr)`}
+        justifyContent="start"
+      >
+        {links.map(
+          ({ label, requireLogin }) =>
+            (!requireLogin || user) && (
+              <a href="aaa" className={classes.link}>
+                <Typography variant="h6" id={label}>
+                  {label}
+                </Typography>
+              </a>
+            )
+        )}
+        {user && (
+          <a className={classes.link} onClick={signOut}>
+            <Typography variant="h6">Sign out</Typography>
+          </a>
+        )}
+      </Box>
+    </>
+  );
 
   return (
     <div className={classes.root}>
       <Container className={classes.cardContainer}>
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          margin={theme.spacing(4, 0, 4, 0)}
-        >
-          <Avatar className={classes.avatar} src="https://picsum.photos/100">
-            A
-          </Avatar>
-          <Typography variant="h1">{JSON.stringify(user)}</Typography>
-        </Box>
-
-        <Box
-          display="grid"
-          gridTemplateRows={`repeat(${links.length}, 1fr)`}
-          justifyContent="start"
-        >
-          {links.map((i) => (
-            <a href="aaa" className={classes.link}>
-              <Typography variant="h6" id={i}>
-                {i}
-              </Typography>
-            </a>
-          ))}
-          <a className={classes.link}>
-            <Typography variant="h6">
-              {user ? "Sign out" : "Sign In"}
-            </Typography>
-          </a>
-        </Box>
+        {loading || error || content()}
       </Container>
     </div>
   );

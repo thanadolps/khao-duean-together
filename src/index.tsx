@@ -5,9 +5,9 @@ import * as serviceWorker from "./serviceWorker";
 import firebase from "firebase";
 
 import "./styles/index.css";
-import { firebaseConfig } from "./constant/firebase-config.constant";
+import { initializeFirebase } from "./components/service/firebase.service";
 
-firebase.initializeApp(firebaseConfig);
+initializeFirebase();
 
 ReactDOM.render(
   <React.StrictMode>
