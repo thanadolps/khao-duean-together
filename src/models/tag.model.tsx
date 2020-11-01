@@ -1,38 +1,11 @@
 export interface Tags {
-  year: Year;
-  major: Major;
-  subject: Subject;
+  year: string;
+  major: string;
+  subject: string;
 }
 
-export enum Year {
-  Y1,
-  Y2,
-  Y3,
-}
-
-export enum Major {
-  General,
-  Computer,
-  Chemical,
-  Mechanical,
-  MiningPetroleum,
-  Electrical,
-  Georesources,
-  Automotive,
-  Civil,
-  NavalArchitectureMarine,
-  Metallurgical,
-  Survey,
-  Environmental,
-  Industrial,
-  Nuclear,
-  ADME,
-  Nano,
-  ICE,
-  AE,
-  AI,
-}
-
-export enum Subject {
-  CalI,
+export interface TagGroups {
+  year: string[];
+  major: string[];
+  subject: string[];
 }

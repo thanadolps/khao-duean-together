@@ -9,10 +9,14 @@ import {
   TextFieldProps,
 } from "@material-ui/core";
 import React from "react";
+import { Controller } from "react-hook-form";
 import { YELLOW } from "../../constant/color.constant";
 import { RoundPaperComponent } from "./round-paper.component";
 
-export interface SelectInputProps extends StandardTextFieldProps {}
+export interface SelectInputProps extends StandardTextFieldProps {
+  control: any;
+  defaultValue: any;
+}
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -26,13 +30,28 @@ const useStyle = makeStyles((theme) => ({
 
 export const SelectInputComponent: React.FC<SelectInputProps> = (props) => {
   const classes = useStyle();
-  const { className, children, select, ...rest } = props;
+  const {
+    className,
+    children,
+    select,
+    control,
+    defaultValue,
+    name,
+    ...rest
+  } = props;
 
   return (
     <RoundPaperComponent className={classes.container + " " + className}>
-      <TextField select className={classes.textField} {...rest}>
-        {children}
-      </TextField>
+      <Controller
+        as={
+          <TextField select className={classes.textField} {...rest}>
+            {children}
+          </TextField>
+        }
+        name={name ?? ""}
+        control={control}
+        defaultValue={defaultValue}
+      />
     </RoundPaperComponent>
   );
 };

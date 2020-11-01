@@ -21,7 +21,8 @@ export const AppModule = () => {
       <React.Suspense fallback={<span>Loading...</span>}>
         <Router>
           <AppbarComponent
-            onclick={() => setOverlayActive(!overlayActive)}
+            onMenuClick={() => setOverlayActive(!overlayActive)}
+            onTitleClick={() => setOverlayActive(false)}
             inverseColor={overlayActive}
           />
           <SlidingOverlayComponent

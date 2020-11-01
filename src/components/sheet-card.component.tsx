@@ -8,8 +8,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import firebase from "firebase";
 import { SheetModel } from "../models/sheet.model";
 import { RoundPaperComponent } from "./ui/round-paper.component";
+import { useDownloadURL } from "react-firebase-hooks/storage";
+import { downloadSheet } from "./service/sheet.service";
 
 export interface SheetCardProps extends PaperProps {
   sheet: SheetModel;
@@ -46,8 +49,9 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
-  const classes = useStyle();
   const { sheet, className, ...rest } = props;
+
+  const classes = useStyle();
 
   return (
     <RoundPaperComponent className={classes.root + " " + className} {...rest}>
@@ -71,11 +75,11 @@ export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
         <Button color="secondary" variant="contained">
           <Typography variant="h3">OPEN</Typography>
         </Button>
-
         <Button
           color="secondary"
           variant="contained"
           className={classes.downloadBtn}
+          onClick={() => downloadSheet(sheet.storagePath)}
         >
           <Typography variant="body2">Download</Typography>
         </Button>

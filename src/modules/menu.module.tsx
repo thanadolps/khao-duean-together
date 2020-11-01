@@ -16,8 +16,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut, signIn } from "../components/service/firebase.service";
 import { User } from "../models/user.model";
 
-const links = [
-  { label: "Upload File", requireLogin: true },
+interface Link {
+  label: string;
+  requireLogin: boolean;
+  href?: string;
+}
+
+const links: Link[] = [
+  { label: "Upload File", requireLogin: true, href: "/upload" },
   { label: "Manage your file", requireLogin: true },
   { label: "", requireLogin: true },
   { label: "Rules and policies", requireLogin: false },
@@ -86,9 +92,9 @@ export const MenuModule = () => {
         justifyContent="start"
       >
         {links.map(
-          ({ label, requireLogin }) =>
+          ({ label, requireLogin, href }) =>
             (!requireLogin || user) && (
-              <a href="aaa" className={classes.link}>
+              <a href={href} className={classes.link}>
                 <Typography variant="h6" id={label}>
                   {label}
                 </Typography>

@@ -16,6 +16,21 @@ body {
   background-color: #efe0b1 !important;
 }
 
+.ember {
+  background-color: #edd27e !important;
+}
+
+.dark-purple {
+  background-color: #523853 !important;
+}
+
+.column-paper {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 16px;
+}
+
 a {
   color: initial;
   text-decoration: none;

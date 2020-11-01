@@ -4,5 +4,11 @@ export interface SheetModel {
   title: string;
   tags: Tags;
   view: number;
-  dataSrc: string;
+  storagePath: string;
+}
+
+export interface SheetUploadModel {
+  title: string;
+  tags: Tags;
+  file: File;
 }
