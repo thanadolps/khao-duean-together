@@ -1,5 +1,5 @@
-import { Container, makeStyles } from "@material-ui/core";
-import React from "react";
+import { Container, makeStyles, Snackbar } from "@material-ui/core";
+import React, { useState } from "react";
 
 import { SheetCardComponent } from "../components/sheet-card.component";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -25,7 +25,8 @@ export const ManageModule = () => {
   const [user] = useAuth();
 
   const [sheets] = useCollectionData<SheetModel>(
-    user ? sheetCollection().where("uploaderId", "==", user?.uid) : undefined
+    user ? sheetCollection().where("uploaderId", "==", user?.uid) : undefined,
+    { idField: "id" }
   );
   return (
     <div className={classes.root}>

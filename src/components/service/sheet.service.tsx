@@ -10,9 +10,22 @@ export function useSheets() {
   return useCollectionDataOnce<SheetModel>(sheetCollection());
 }
 
-export async function downloadSheet(storagePath: string) {
+export async function downloadSheet(
+  storagePath: string,
+  view: number,
+  id?: string
+) {
   const url = await firebase.storage().ref(storagePath).getDownloadURL();
   window.open(url);
+
+  await sheetCollection()
+    .doc(id)
+    .update({ view: view + 1 });
+}
+
+export async function deleteSheet(id: string, storagePath: string) {
+  await sheetCollection().doc(id).delete();
+  await firebase.storage().ref(storagePath).delete();
 }
 
 export async function uploadSheet(sheetUpload: SheetUploadModel) {

@@ -5,12 +5,13 @@ import {
   makeStyles,
   Paper,
   PaperProps,
+  Snackbar,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { SheetModel } from "../models/sheet.model";
 import { RoundPaperComponent } from "./ui/round-paper.component";
-import { downloadSheet } from "./service/sheet.service";
+import { deleteSheet, downloadSheet } from "./service/sheet.service";
 
 export interface SheetCardProps extends PaperProps {
   sheet: SheetModel;
@@ -49,17 +50,35 @@ const useStyle = makeStyles((theme) => ({
 
 export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
   const { sheet, className, uid, ...rest } = props;
-
+  const [deleteSnack, setDeleteSnack] = useState(false);
   const classes = useStyle();
 
   return (
     <RoundPaperComponent className={classes.root + " " + className} {...rest}>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={deleteSnack}
+        autoHideDuration={5000}
+        onClose={() => setDeleteSnack(false)}
+        message="Deleted"
+      />
+
       <Box display="flex" justifyContent="space-between">
         <Typography variant="h3" className={classes.title}>
           <b>{sheet.title}</b>
         </Typography>
 
-        {uid === sheet.uploaderId && <IconButton>X</IconButton>}
+        {uid === sheet.uploaderId && (
+          <IconButton
+            onClick={() => {
+              deleteSheet((sheet as any).id, sheet.storagePath)
+                .catch(() => {})
+                .then(() => setDeleteSnack(true));
+            }}
+          >
+            X
+          </IconButton>
+        )}
       </Box>
 
       <div>
@@ -71,7 +90,7 @@ export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
       </div>
 
       <Typography color="textSecondary">
-        <i>{sheet.view} view</i>
+        <i>{sheet.view} download</i>
       </Typography>
 
       <Box className={classes.buttonContainer}>
@@ -82,7 +101,9 @@ export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
           color="secondary"
           variant="contained"
           className={classes.downloadBtn}
-          onClick={() => downloadSheet(sheet.storagePath)}
+          onClick={() => {
+            downloadSheet(sheet.storagePath, sheet.view, (sheet as any).id);
+          }}
         >
           <Typography variant="body2">Download</Typography>
         </Button>
