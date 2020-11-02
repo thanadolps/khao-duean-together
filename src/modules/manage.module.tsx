@@ -2,14 +2,8 @@ import { Container, makeStyles } from "@material-ui/core";
 import React from "react";
 
 import { SheetCardComponent } from "../components/sheet-card.component";
-import {
-  useCollectionData,
-  useCollectionDataOnce,
-} from "react-firebase-hooks/firestore";
-import {
-  sheetCollection,
-  useSheets,
-} from "../components/service/sheet.service";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { sheetCollection } from "../components/service/sheet.service";
 import { SheetModel } from "../models/sheet.model";
 import { useAuth } from "../components/service/firebase.service";
 
@@ -36,7 +30,9 @@ export const ManageModule = () => {
   return (
     <div className={classes.root}>
       <Container className={classes.cardContainer}>
-        {sheets?.map((sheet) => <SheetCardComponent sheet={sheet} />) ?? ""}
+        {sheets?.map((sheet) => (
+          <SheetCardComponent sheet={sheet} uid={user?.uid} />
+        )) ?? ""}
       </Container>
     </div>
   );

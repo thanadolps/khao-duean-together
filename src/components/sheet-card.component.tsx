@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Chip,
   IconButton,
   makeStyles,
   Paper,
@@ -9,10 +8,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
-import firebase from "firebase";
 import { SheetModel } from "../models/sheet.model";
 import { RoundPaperComponent } from "./ui/round-paper.component";
-import { useDownloadURL } from "react-firebase-hooks/storage";
 import { downloadSheet } from "./service/sheet.service";
 
 export interface SheetCardProps extends PaperProps {
@@ -51,7 +48,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
-  const { sheet, className, ...rest } = props;
+  const { sheet, className, uid, ...rest } = props;
 
   const classes = useStyle();
 
@@ -62,7 +59,7 @@ export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
           <b>{sheet.title}</b>
         </Typography>
 
-        <IconButton>X</IconButton>
+        {uid === sheet.uploaderId && <IconButton>X</IconButton>}
       </Box>
 
       <div>
