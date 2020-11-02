@@ -58,20 +58,6 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-function onSubmit(data: any) {
-  const { major, subject, year, ...rest } = data;
-  const sheetUpload = {
-    tags: {
-      major,
-      subject,
-      year,
-    },
-    ...rest,
-  };
-
-  uploadSheet(sheetUpload);
-}
-
 export const UploadModule = () => {
   const classes = useStyle();
   const [user] = useAuth();
@@ -87,6 +73,7 @@ export const UploadModule = () => {
     setValue,
     watch,
     errors,
+    reset,
   } = useForm();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -97,6 +84,20 @@ export const UploadModule = () => {
       name: "file",
     });
   }, [register]);
+
+  function onSubmit(data: any) {
+    const { major, subject, year, ...rest } = data;
+    const sheetUpload = {
+      tags: {
+        major,
+        subject,
+        year,
+      },
+      ...rest,
+    };
+
+    uploadSheet(sheetUpload).then(() => reset());
+  }
 
   function onFileInput(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.item(0);
