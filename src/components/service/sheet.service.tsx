@@ -16,7 +16,7 @@ export async function downloadSheet(
   id?: string
 ) {
   const url = await firebase.storage().ref(storagePath).getDownloadURL();
-  window.open(url);
+  window.open(url, "_blank");
 
   await sheetCollection()
     .doc(id)
