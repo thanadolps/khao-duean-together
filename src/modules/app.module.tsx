@@ -12,6 +12,7 @@ import { FrontPageModule } from "./frontpage.module";
 import { MenuModule } from "./menu.module";
 
 import { SlidingOverlayComponent } from "../components/sliding-overlay.component";
+import { ManageModule } from "./manage.module";
 
 export const AppModule = () => {
   const [overlayActive, setOverlayActive] = useState(false);
@@ -36,6 +37,9 @@ export const AppModule = () => {
               </Route>
               <Route path="/display">
                 <DisplayModule />
+              </Route>
+              <Route path="/manage">
+                <ManageModule />
               </Route>
               <Route exact path="/">
                 <FrontPageModule />

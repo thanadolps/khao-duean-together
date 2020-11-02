@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Chip,
+  IconButton,
   makeStyles,
   Paper,
   PaperProps,
@@ -16,6 +17,7 @@ import { downloadSheet } from "./service/sheet.service";
 
 export interface SheetCardProps extends PaperProps {
   sheet: SheetModel;
+  uid?: string;
 }
 
 const useStyle = makeStyles((theme) => ({
@@ -55,9 +57,13 @@ export const SheetCardComponent: React.FC<SheetCardProps> = (props) => {
 
   return (
     <RoundPaperComponent className={classes.root + " " + className} {...rest}>
-      <Typography variant="h3" className={classes.title}>
-        <b>{sheet.title}</b>
-      </Typography>
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="h3" className={classes.title}>
+          <b>{sheet.title}</b>
+        </Typography>
+
+        <IconButton>X</IconButton>
+      </Box>
 
       <div>
         {[sheet.tags.major, sheet.tags.subject, sheet.tags.year].map((tag) => (

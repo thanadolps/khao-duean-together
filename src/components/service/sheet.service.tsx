@@ -2,7 +2,7 @@ import firebase from "firebase";
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
 import { SheetModel, SheetUploadModel } from "../../models/sheet.model";
 
-function sheetCollection() {
+export function sheetCollection() {
   return firebase.firestore().collection("sheet");
 }
 

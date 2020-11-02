@@ -1,5 +1,7 @@
 import firebase from "firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { firebaseConfig } from "../../constant/firebase-config.constant";
+import { User } from "../../models/user.model";
 
 export function initializeFirebase() {
   firebase.initializeApp(firebaseConfig);
@@ -17,4 +19,8 @@ export function signIn() {
 
 export function signOut() {
   return firebase.auth().signOut();
+}
+
+export function useAuth() {
+  return useAuthState(firebase.auth()) as [User | null, boolean, any];
 }

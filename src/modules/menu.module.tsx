@@ -13,8 +13,13 @@ import {
 
 import { YELLOW } from "../constant/color.constant";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut, signIn } from "../components/service/firebase.service";
+import {
+  signOut,
+  signIn,
+  useAuth,
+} from "../components/service/firebase.service";
 import { User } from "../models/user.model";
+import { useHistory } from "react-router-dom";
 
 interface Link {
   label: string;
@@ -24,7 +29,7 @@ interface Link {
 
 const links: Link[] = [
   { label: "Upload File", requireLogin: true, href: "/upload" },
-  { label: "Manage your file", requireLogin: true },
+  { label: "Manage your file", requireLogin: true, href: "/manage" },
   { label: "", requireLogin: true },
   { label: "Rules and policies", requireLogin: false },
   { label: "About", requireLogin: false },
@@ -55,12 +60,9 @@ const useStyle = makeStyles((theme) => ({
 export const MenuModule = () => {
   const classes = useStyle();
   const theme = useTheme();
+  const history = useHistory();
 
-  const [user, loading, error] = useAuthState(firebase.auth()) as [
-    User | null,
-    boolean,
-    any
-  ];
+  const [user, loading, error] = useAuth();
 
   const content = () => (
     <>
@@ -102,7 +104,10 @@ export const MenuModule = () => {
             )
         )}
         {user && (
-          <a className={classes.link} onClick={signOut}>
+          <a
+            className={classes.link}
+            onClick={() => signOut().then(() => history.push("/"))}
+          >
             <Typography variant="h6">Sign out</Typography>
           </a>
         )}

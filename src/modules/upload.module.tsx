@@ -19,6 +19,8 @@ import { PURPLE } from "../constant/color.constant";
 import { TagGroups } from "../models/tag.model";
 import { useForm } from "react-hook-form";
 import { uploadSheet } from "../components/service/sheet.service";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuth } from "../components/service/firebase.service";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -72,6 +74,7 @@ function onSubmit(data: any) {
 
 export const UploadModule = () => {
   const classes = useStyle();
+  const [user] = useAuth();
 
   const [tagsInfo, loading, error] = useDocumentDataOnce<TagGroups>(
     firebase.firestore().doc("const/tag")
@@ -109,6 +112,12 @@ export const UploadModule = () => {
     <div className={classes.root}>
       <Container>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            name="uploaderId"
+            value={user?.uid}
+            hidden
+            ref={register}
+          ></input>
           <RoundPaperComponent className={classes.uploadDescriptionContainer}>
             <input
               type="file"
