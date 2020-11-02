@@ -7,6 +7,7 @@ import {
   makeStyles,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -79,6 +80,8 @@ export const UploadModule = () => {
 
   const selectedFile = watch("file") as File | undefined;
 
+  const [snackBar, setSnackBar] = useState(false);
+
   useEffect(() => {
     register({
       name: "file",
@@ -96,7 +99,10 @@ export const UploadModule = () => {
       ...rest,
     };
 
-    uploadSheet(sheetUpload).then(() => reset());
+    uploadSheet(sheetUpload).then(() => {
+      reset();
+      setSnackBar(true);
+    });
   }
 
   function onFileInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -211,6 +217,13 @@ export const UploadModule = () => {
           </Box>
         </form>
       </Container>
+
+      <Snackbar
+        message="File Uploaded"
+        autoHideDuration={5000}
+        onClose={() => setSnackBar(false)}
+        open={snackBar}
+      ></Snackbar>
     </div>
   );
 };
