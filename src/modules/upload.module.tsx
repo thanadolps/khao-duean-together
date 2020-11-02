@@ -95,8 +95,6 @@ export const UploadModule = () => {
   useEffect(() => {
     register({
       name: "file",
-      required: true,
-      validate: (val) => fileInputRef.current?.files?.item(0)?.name === "ll",
     });
   }, [register]);
 
