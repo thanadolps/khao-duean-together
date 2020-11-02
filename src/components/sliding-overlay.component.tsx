@@ -2,6 +2,7 @@ import {
   AppBar,
   Avatar,
   Button,
+  Hidden,
   makeStyles,
   Slide,
   SlideProps,
@@ -34,12 +35,13 @@ const useStyle = makeStyles((theme) => ({
 export const SlidingOverlayComponent: React.FC<SlidingOverlayProps> = (
   props
 ) => {
-  const classes = useStyle();
+  const classes = useStyle(props);
   const { children, overlay, ...rest } = props;
 
   return (
     <div className={classes.root}>
-      <div className={classes.overlap}>{props.children}</div>
+      {!props.in && <div className={classes.overlap}>{props.children}</div>}
+
       <Slide {...rest}>
         <div className={`${classes.overlap} ${classes.overlay}`}>{overlay}</div>
       </Slide>
