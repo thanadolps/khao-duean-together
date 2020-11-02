@@ -61,7 +61,9 @@ export const AppbarComponent: React.FC<AppbarProps> = (props) => {
         </Typography>
 
         {!user && !loading ? (
-          <Button onClick={signIn}>Sign In</Button>
+          <Button onClick={signIn} variant="contained" color="secondary">
+            Sign In
+          </Button>
         ) : (
           <Avatar src={user?.photoURL} />
         )}
