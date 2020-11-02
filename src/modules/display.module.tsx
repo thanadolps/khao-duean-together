@@ -1,4 +1,10 @@
-import { Badge, Box, Container, makeStyles } from "@material-ui/core";
+import {
+  Badge,
+  Box,
+  Container,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
 
 import { SheetCardComponent } from "../components/sheet-card.component";
@@ -51,7 +57,11 @@ export const DisplayModule = () => {
             ))}
         </Box>
 
-        {sheets?.map((sheet) => <SheetCardComponent sheet={sheet} />) ?? ""}
+        {sheets ? (
+          sheets?.map((sheet) => <SheetCardComponent sheet={sheet} />) ?? ""
+        ) : (
+          <Typography variant="h2"></Typography>
+        )}
       </Container>
     </div>
   );

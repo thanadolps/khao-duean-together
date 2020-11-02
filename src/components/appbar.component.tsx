@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import { DARK_PURPLE, EMBER, PURPLE, YELLOW } from "../constant/color.constant";
+import { signIn, useAuth } from "./service/firebase.service";
 import { MenuButtonComponent } from "./ui/menu-button.component";
 
 export interface AppbarProps {
@@ -40,7 +41,10 @@ const useStyle = makeStyles<Theme, AppbarProps>((theme) => ({
 
 export const AppbarComponent: React.FC<AppbarProps> = (props) => {
   const classes = useStyle(props);
+
   const { onMenuClick, onTitleClick, inverseColor } = props;
+
+  const [user, loading] = useAuth();
 
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -56,7 +60,11 @@ export const AppbarComponent: React.FC<AppbarProps> = (props) => {
           </Link>
         </Typography>
 
-        <Avatar />
+        {!user && !loading ? (
+          <Button onClick={signIn}>Sign In</Button>
+        ) : (
+          <Avatar src={user?.photoURL} />
+        )}
       </div>
     </AppBar>
   );
