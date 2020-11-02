@@ -1,6 +1,7 @@
 import {
   AppBar,
   Avatar,
+  Box,
   Button,
   Hidden,
   makeStyles,
@@ -40,8 +41,9 @@ export const SlidingOverlayComponent: React.FC<SlidingOverlayProps> = (
 
   return (
     <div className={classes.root}>
-      {!props.in && <div className={classes.overlap}>{props.children}</div>}
-
+      <Box hidden={props.in} className={classes.overlap}>
+        {props.children}
+      </Box>
       <Slide {...rest}>
         <div className={`${classes.overlap} ${classes.overlay}`}>{overlay}</div>
       </Slide>
